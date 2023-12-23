@@ -45,12 +45,10 @@ public class MainActivity extends AppCompatActivity {
     static Button btnSelect = null;
     static Button btnConnect = null;
     static Button btnSend = null;
-//    static Button btnSend2 = null;
     static TextView baseVolt = null;
 
     static Handler _handler = null;
 
-    String volt_display_buf;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

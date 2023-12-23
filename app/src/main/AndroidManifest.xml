@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+    <!-- 蓝牙权限 原先android:maxSdkVersion="30" -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /> <!-- 位置权限 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 安卓12蓝牙权限 -->
+    <!-- 扫描权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" /> <!-- 蓝牙可被发现权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" /> <!-- 连接权限 -->
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> <!-- 声明应用需要支持BLE -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +24,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SmartPower"
         tools:targetApi="31">
+        <activity
+            android:name=".InitializationActivity"
+            android:exported="false"
+            android:label="@string/title_activity_initialization"
+            android:theme="@style/Theme.SmartPower" />
         <activity
             android:name=".ConnectActivity"
             android:exported="false" />
@@ -30,28 +47,5 @@
             </intent-filter>
         </activity>
     </application>
-
-    <!-- 蓝牙权限 原先android:maxSdkVersion="30" -->
-    <uses-permission
-        android:name="android.permission.BLUETOOTH"
-        />
-    <uses-permission
-        android:name="android.permission.BLUETOOTH_ADMIN"
-        />
-    <!-- 位置权限 -->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 安卓12蓝牙权限 -->
-    <!-- 扫描权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
-    <!-- 蓝牙可被发现权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <!-- 连接权限 -->
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <!-- 声明应用需要支持BLE -->
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
-
 
 </manifest>
