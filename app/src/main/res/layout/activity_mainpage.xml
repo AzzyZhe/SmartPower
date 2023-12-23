@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="476dp"
+        android:text="现在电压："
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_nowVoltage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="暂无数值"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_2" />
+
+    <EditText
+        android:id="@+id/editText_1"
+        android:layout_width="191dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="218dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="3.0"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toTopOf="@+id/textView_3" />
+
+    <TextView
+        android:id="@+id/textView_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="44dp"
+        android:text="设备信息："
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/deviceInfo_BLE"
+        android:layout_width="245dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:text="暂无"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toBottomOf="@+id/textView_3" />
+
+    <Button
+        android:id="@+id/button_Connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="连接"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="@+id/deviceInfo_BLE"
+        app:layout_constraintTop_toTopOf="@+id/button_Select" />
+
+    <Button
+        android:id="@+id/button_Send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="208dp"
+        android:text="发送"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/editText_1"
+        app:layout_constraintTop_toTopOf="@+id/editText_1" />
+
+    <Button
+        android:id="@+id/button_Select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="148dp"
+        android:text="选择设备"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toTopOf="@+id/textView_3" />
+
+    <TextView
+        android:id="@+id/text_baseVoltage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="116dp"
+        android:text="基准电压："
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView_2"
+        app:layout_constraintTop_toBottomOf="@+id/textView_2" />
+
+    <TextView
+        android:id="@+id/text_baseVoltage_disp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="116dp"
+        android:text="Undef"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/text_baseVoltage"
+        app:layout_constraintTop_toBottomOf="@+id/textView_2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
