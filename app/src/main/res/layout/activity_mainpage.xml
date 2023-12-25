@@ -32,9 +32,10 @@
         android:layout_height="46dp"
         android:layout_marginTop="218dp"
         android:ems="10"
-        android:inputType="text"
         android:text="3.0"
         android:visibility="invisible"
+        android:inputType="numberDecimal"
+        android:hint="需要调整为的电压"
         app:layout_constraintStart_toStartOf="@+id/textView_3"
         app:layout_constraintTop_toTopOf="@+id/textView_3" />
 
@@ -85,27 +86,5 @@
         android:text="选择设备"
         app:layout_constraintStart_toStartOf="@+id/textView_3"
         app:layout_constraintTop_toTopOf="@+id/textView_3" />
-
-    <TextView
-        android:id="@+id/text_baseVoltage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="116dp"
-        android:text="基准电压："
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="@+id/textView_2"
-        app:layout_constraintTop_toBottomOf="@+id/textView_2" />
-
-    <TextView
-        android:id="@+id/text_baseVoltage_disp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="116dp"
-        android:text="Undef"
-        android:textSize="24sp"
-        app:layout_constraintStart_toEndOf="@+id/text_baseVoltage"
-        app:layout_constraintTop_toBottomOf="@+id/textView_2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

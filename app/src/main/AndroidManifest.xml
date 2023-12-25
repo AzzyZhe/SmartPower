@@ -15,6 +15,7 @@
         android:required="true" />
 
     <application
+        android:name=".InitializationActivity"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,12 +26,7 @@
         android:theme="@style/Theme.SmartPower"
         tools:targetApi="31">
         <activity
-            android:name=".InitializationActivity"
-            android:exported="false"
-            android:label="@string/title_activity_initialization"
-            android:theme="@style/Theme.SmartPower" />
-        <activity
-            android:name=".ConnectActivity"
+            android:name=".PreferenceActivity"
             android:exported="false" />
         <activity
             android:name=".DeviceActivity"

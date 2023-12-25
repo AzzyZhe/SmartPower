@@ -4,12 +4,10 @@ package org.azzyzhe.smartpower;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,41 +16,43 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
 
 
 public class MainActivity extends AppCompatActivity {
 
-    static int cnt = 0;
 
     private BluetoothDevice _device = null;
     private Session _session = null;
 
-    static TextView edxContent = null;
-    static TextView edxContent2 = null
-    static TextView edxMessage = null;
-    static TextView txtDevice = null;
-    static Button btnSelect = null;
-    static Button btnConnect = null;
-    static Button btnSend = null;
-    static TextView baseVolt = null;
+    //这堆View和Handler原本都有static不知道
+    TextView edxContent = null;
+    TextView edxMessage = null;
+    TextView txtDevice = null;
+    Button btnSelect = null;
+    Button btnConnect = null;
+    Button btnSend = null;
 
-    static Handler _handler = null;
+    Handler _handler = null;
 
+    SharedPreferences sharedPreferences;
+
+//    int cnt = 0;
+    double baseVolt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        Toast.makeText(MainActivity.this, "MainActivity Run!",
+//                Toast.LENGTH_SHORT).show();
+
         setContentView(R.layout.activity_mainpage);
 
 
@@ -63,7 +63,9 @@ public class MainActivity extends AppCompatActivity {
         btnConnect = findViewById(R.id.button_Connect);
         btnSend = findViewById(R.id.button_Send);
 
-        baseVolt = findViewById(R.id.text_baseVoltage_disp);
+        sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
+//        double baseVolt = sharedPreferences.getFloat("baseVoltage", 5.0f);
+
 
 //        volt_display_buf = new String[];
         _handler =  new Handler(Looper.getMainLooper())
@@ -88,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(pos1 + 1 < pos2)
                     volt_s = recv.substring(pos1 + 1, pos2);
-                double volt = 5.0/1024*Integer.parseInt(volt_s);
+                baseVolt = sharedPreferences.getFloat("baseVoltage", 5.0f);
+                double volt = baseVolt/1024*Integer.parseInt(volt_s);
                 String disp = String.format("%.2fV", volt);
 
                 edxMessage.setText(disp);
@@ -147,11 +150,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == R.id.info_page) {
-            Toast.makeText(this, "InfoPage还没做完", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.change_connection) {
-            Toast.makeText(this, "Connect", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
+//        if (itemId == R.id.info_page) {
+//            Toast.makeText(this, "InfoPage还没做完", Toast.LENGTH_SHORT).show();
+//        } else if (itemId == R.id.change_Preference) {
+//            Toast.makeText(this, "Connect", Toast.LENGTH_SHORT).show();
+//            Intent intent = new Intent(MainActivity.this, ConnectActivity.class);
+//            startActivity(intent);
+//        }
+        if (itemId == R.id.change_Preference) {
+//            Toast.makeText(this, "进入设置页面", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, PreferenceActivity.class);
             startActivity(intent);
         }
 
@@ -204,8 +212,9 @@ public class MainActivity extends AppCompatActivity {
     {
         try
         {
+            baseVolt = sharedPreferences.getFloat("baseVoltage",5.0f);
             float volt_set = Float.parseFloat(edxContent.getText().toString());
-            int volt_send = (int)(volt_set/5.0*1023);
+            int volt_send = (int)(volt_set/baseVolt*1023);
             _session.Send(String.valueOf(volt_send));
 
         } catch (IOException e)

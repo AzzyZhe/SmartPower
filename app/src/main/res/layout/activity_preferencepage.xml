@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PreferenceActivity">
+
+    <TextView
+        android:id="@+id/text_baseVoltage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="40dp"
+        android:text="测量基准电压："
+        android:textSize="34sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_baseVoltage_disp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="102dp"
+        android:text="Undef"
+        android:textSize="24sp"
+        android:visibility="visible"
+        app:layout_constraintStart_toStartOf="@+id/text_baseVoltage"
+        app:layout_constraintTop_toTopOf="@+id/text_baseVoltage" />
+
+    <EditText
+        android:id="@+id/text_baseVoltage_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:text="Undef"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        android:inputType="numberDecimal"
+        android:hint="单片机5V端真电压"
+        app:layout_constraintStart_toStartOf="@+id/text_baseVoltage"
+        app:layout_constraintTop_toTopOf="@+id/text_baseVoltage" />
+
+    <Button
+        android:id="@+id/button_baseVoltage_adjust"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="216dp"
+        android:layout_marginTop="4dp"
+        android:text="调整"
+        app:layout_constraintStart_toStartOf="@+id/text_baseVoltage_disp"
+        app:layout_constraintTop_toTopOf="@+id/text_baseVoltage_input" />
+</androidx.constraintlayout.widget.ConstraintLayout>
