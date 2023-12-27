@@ -22,7 +22,7 @@ public class PreferenceActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "Preference页onCreate执行", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "Preference页onCreate执行", Toast.LENGTH_SHORT).show();
         setContentView(R.layout.activity_preferencepage); //之前忘记先聚焦到此页了
         sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
 
@@ -37,14 +37,14 @@ public class PreferenceActivity extends AppCompatActivity {
         }
 
         baseVolt = sharedPreferences.getFloat("baseVoltage",5.0f);
-        baseVolt_disp.setText(String.format("%.4fV", baseVolt));
+        baseVolt_disp.setText(String.format("%.3fV", baseVolt));
 
         button_adjust.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(!b_button_isAdjusting) {
                     baseVolt = sharedPreferences.getFloat("baseVoltage",5.0f);
-                    baseVolt_input.setText(String.format("%.4f",baseVolt));
+                    baseVolt_input.setText(String.format("%.3f",baseVolt));
 
                     baseVolt_disp.setVisibility(View.INVISIBLE);
                     baseVolt_input.setVisibility(View.VISIBLE);
@@ -65,10 +65,10 @@ public class PreferenceActivity extends AppCompatActivity {
 
                         editor.putFloat("baseVoltage", (float)baseVolt);
                         editor.apply();
-                        Toast.makeText(PreferenceActivity.this, String.format("已修改基准电压为%.4fV", newVolt), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PreferenceActivity.this, String.format("已修改基准电压为%.3fV", newVolt), Toast.LENGTH_SHORT).show();
 
                         baseVolt = sharedPreferences.getFloat("baseVoltage",5.0f);
-                        baseVolt_disp.setText(String.format("%.4fV",baseVolt));
+                        baseVolt_disp.setText(String.format("%.3fV",baseVolt));
 
                         baseVolt_disp.setVisibility(View.VISIBLE);
                         baseVolt_input.setVisibility(View.INVISIBLE);

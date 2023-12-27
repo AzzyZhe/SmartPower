@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SmartPower</string>
+    <string name="app_name">可编程电源</string>
     <string name="title_activity_first">FirstActivity</string>
     <string name="title_activity_initialization">InitializationActivity</string>
 </resources>

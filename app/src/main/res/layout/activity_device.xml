@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="bluetoothtoserial.DeviceActivity" >
-        <!-- 此处我从教程里删了一些用不到的东西 -->
+        <!-- 此处从教程里删了一些用不到的东西 -->
 
         <ListView
             android:id="@+id/DeviceView"
