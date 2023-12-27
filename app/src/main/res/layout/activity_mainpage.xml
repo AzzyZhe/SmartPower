@@ -87,4 +87,38 @@
         app:layout_constraintStart_toStartOf="@+id/textView_3"
         app:layout_constraintTop_toTopOf="@+id/textView_3" />
 
+    <Button
+        android:id="@+id/button_defaultControl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="296dp"
+        android:text="预设控制"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toTopOf="@+id/textView_3" />
+
+    <TextView
+        android:id="@+id/countDown"
+        android:layout_width="82dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="208dp"
+        android:layout_marginTop="252dp"
+        android:text="暂无"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toBottomOf="@+id/textView_3" />
+
+    <TextView
+        android:id="@+id/countDown_Volt"
+        android:layout_width="82dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="252dp"
+        android:text="暂无"
+        android:textSize="24sp"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@+id/textView_3"
+        app:layout_constraintTop_toBottomOf="@+id/textView_3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

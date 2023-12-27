@@ -1,5 +1,3 @@
-//todo:更新版本号1.1
-
 package org.azzyzhe.smartpower;
 
 import androidx.annotation.NonNull;
@@ -38,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     Button btnSelect = null;
     Button btnConnect = null;
     Button btnSend = null;
+    Button button_control = null;
+
+    TextView countDown = null;
+    TextView countDown_Volt = null;
 
     Handler _handler = null;
 
@@ -50,8 +52,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        Toast.makeText(MainActivity.this, "MainActivity Run!",
-//                Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "MainActivity Run!",
+                Toast.LENGTH_SHORT).show();
 
         setContentView(R.layout.activity_mainpage);
 
@@ -62,6 +64,9 @@ public class MainActivity extends AppCompatActivity {
         btnSelect = findViewById(R.id.button_Select);
         btnConnect = findViewById(R.id.button_Connect);
         btnSend = findViewById(R.id.button_Send);
+
+        countDown = findViewById(R.id.countDown);
+        countDown_Volt = findViewById(R.id.countDown_Volt);
 
         sharedPreferences = getSharedPreferences("my_preferences", MODE_PRIVATE);
 //        double baseVolt = sharedPreferences.getFloat("baseVoltage", 5.0f);
@@ -137,7 +142,69 @@ public class MainActivity extends AppCompatActivity {
                 btnSend_Click(view);
             }
         });
+        button_control = findViewById(R.id.button_defaultControl);
+        button_control.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                baseVolt = sharedPreferences.getFloat("baseVoltage", 5.0f);
+                if(baseVolt < 5.0) {
+                    Toast.makeText(MainActivity.this, "调整电压包含5.0V，高于当前测量基准电压，无法使用默认控制", Toast.LENGTH_LONG).show();
+                } else {
+                    // 在新线程中执行耗时操作
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // 执行耗时操作的代码
+                            final double[] volt_set = new double[]{3.0, 4.0, 5.0};
+                            int volt_send = (int)(3.0/baseVolt*1023);
+                            for(int i = 0; i < 3; i++) {
+                                volt_send = (int)(volt_set[i]/baseVolt*1023);
+                                try {
+                                    _session.Send(String.format("(%d)",volt_send));
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                                int finalI = i;
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        countDown_Volt.setText(String.format("%.2fV",volt_set[finalI]));
+                                    }
+                                });
+                                for(int j = 0; j < 10; j++) {
+                                    int finalJ = j;
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            countDown.setText(String.format("%ds", 10 - finalJ));
+                                        }
+                                    });
+                                    try {
+                                        Thread.sleep(1000);
+                                    } catch (InterruptedException e) {
+                                        throw new RuntimeException(e);
+                                    }
+                                }
+                            }
 
+                            volt_send = (int)(3.0/baseVolt*1023);
+                            try {
+                                _session.Send(String.format("(%d)",volt_send));
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    countDown_Volt.setText(String.format("%.2fV", 3.0));
+                                    countDown.setText("结束");
+                                }
+                            });
+                        }
+                    }).start();
+                }
+            }
+        });
     }
 
     @Override
@@ -199,6 +266,10 @@ public class MainActivity extends AppCompatActivity {
             edxContent.setVisibility(View.VISIBLE);
             btnSend.setVisibility(View.VISIBLE);
             btnSend.setText("发送消息");
+
+            button_control.setVisibility(View.VISIBLE);
+            countDown.setVisibility(View.VISIBLE);
+            countDown_Volt.setVisibility(View.VISIBLE);
         }
         else
         {
@@ -206,6 +277,7 @@ public class MainActivity extends AppCompatActivity {
                     "连接失败",
                     Toast.LENGTH_LONG).show();
             btnSend.setVisibility(View.INVISIBLE);
+//            button_control.setVisibility(View.INVISIBLE);
         }
     }
     public void btnSend_Click(View v)//发送消息
@@ -214,8 +286,12 @@ public class MainActivity extends AppCompatActivity {
         {
             baseVolt = sharedPreferences.getFloat("baseVoltage",5.0f);
             float volt_set = Float.parseFloat(edxContent.getText().toString());
-            int volt_send = (int)(volt_set/baseVolt*1023);
-            _session.Send(String.valueOf(volt_send));
+            if(volt_set > baseVolt) {
+                Toast.makeText(MainActivity.this, "设置电压不能高过当前测量基准电压", Toast.LENGTH_LONG).show();
+            } else {
+                int volt_send = (int)(volt_set/baseVolt*1023);
+                _session.Send(String.format("(%d)",volt_send));
+            }
 
         } catch (IOException e)
         {
