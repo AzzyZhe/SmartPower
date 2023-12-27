@@ -150,14 +150,22 @@ public class MainActivity extends AppCompatActivity {
                 if(baseVolt < 5.0) {
                     Toast.makeText(MainActivity.this, "调整电压包含5.0V，高于当前测量基准电压，无法使用默认控制", Toast.LENGTH_LONG).show();
                 } else {
+//                    button_control.setVisibility(View.INVISIBLE);
+//                    btnSend.setVisibility(View.INVISIBLE);
+                    button_control.setEnabled(false);
+                    button_control.setAlpha(0.8f);
+                    btnSend.setEnabled(false);
+                    btnSend.setAlpha(0.8f);
                     // 在新线程中执行耗时操作
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
                             // 执行耗时操作的代码
+                            int n = 3;
                             final double[] volt_set = new double[]{3.0, 4.0, 5.0};
+                            final int[] time_set = new int[]{10, 10, 10};
                             int volt_send = (int)(3.0/baseVolt*1023);
-                            for(int i = 0; i < 3; i++) {
+                            for(int i = 0; i < n; i++) {
                                 volt_send = (int)(volt_set[i]/baseVolt*1023);
                                 try {
                                     _session.Send(String.format("(%d)",volt_send));
@@ -171,12 +179,12 @@ public class MainActivity extends AppCompatActivity {
                                         countDown_Volt.setText(String.format("%.2fV",volt_set[finalI]));
                                     }
                                 });
-                                for(int j = 0; j < 10; j++) {
+                                for(int j = 0; j < time_set[i]; j++) {
                                     int finalJ = j;
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            countDown.setText(String.format("%ds", 10 - finalJ));
+                                            countDown.setText(String.format("%ds", time_set[finalI] - finalJ));
                                         }
                                     });
                                     try {
@@ -198,6 +206,13 @@ public class MainActivity extends AppCompatActivity {
                                 public void run() {
                                     countDown_Volt.setText(String.format("%.2fV", 3.0));
                                     countDown.setText("结束");
+
+//                                    button_control.setVisibility(View.VISIBLE);
+//                                    btnSend.setVisibility(View.VISIBLE);
+                                    button_control.setEnabled(true);
+                                    button_control.setAlpha(1.0f);
+                                    btnSend.setEnabled(true);
+                                    btnSend.setAlpha(1.0f);
                                 }
                             });
                         }
